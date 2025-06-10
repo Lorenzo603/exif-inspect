@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Exif Metadata</title>
+    <style>
+        body {
+            background-color: #333;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: #66d9ef;
+        }
+
+        pre {
+            background-color: #444;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Exif Metadata</h1>
+    <pre>
+      {% for key, value in exif_data.items() %}
+        {{ key }}: {{ value }}
+      {% endfor %}
+    </pre>
+</body>
+
+</html>
