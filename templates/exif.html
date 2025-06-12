@@ -117,11 +117,14 @@
                 {% for key, value in exif_data.items() %}
                 <tr>
                     <td class="key">{{ key }}</td>
-                    <td class="value">{{ value }} <button class="copy-btn"
-                            onclick="copyToClipboard(this, '{{ value }}')"><img
-                                src="{{ url_for('static', filename='img/copy-to-clipboard-icon.svg') }}" alt="Copy">
+                    <td class="value">
+                        {{ value | format_json | safe }}
+                        <button class="copy-btn"
+                            onclick="copyToClipboard(this, '{{ value }}')">
+                            <img src="{{ url_for('static', filename='img/copy-to-clipboard-icon.svg') }}" alt="Copy">
                             <span class="tooltip">Copied!</span>
-                        </button></td>
+                        </button>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

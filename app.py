@@ -15,6 +15,10 @@ else:
     USE_TEMPFILE = True
 
 def is_json(content):
+    if not content:
+        return False
+    if not content.startswith('{'):
+        return False
     try:
         json.loads(content)
         return True
@@ -24,9 +28,21 @@ def is_json(content):
 def format_json(content):
     try:
         json_data = json.loads(content)
-        return json.dumps(json_data, indent=4)
+        pretty_json = json.dumps(json_data, indent=4)
+        # Add basic syntax highlighting
+        pretty_html = pretty_json.replace(':', '<span style="color: #f92672;">:</span>')
+        pretty_html = pretty_html.replace('{', '<span style="color: #66d9ef;">{</span>')
+        pretty_html = pretty_html.replace('}', '<span style="color: #66d9ef;">}</span>')
+        pretty_html = pretty_html.replace('[', '<span style="color: #a6e22e;">[</span>')
+        pretty_html = pretty_html.replace(']', '<span style="color: #a6e22e;">]</span>')
+        pretty_html = pretty_html.replace(',', '<span style="color: #f92672;">,</span>')
+        return '<pre>' + pretty_html + '</pre>'
     except ValueError:
         return content
+    
+# Register the filters with Flask's Jinja environment
+app.jinja_env.filters['is_json'] = is_json
+app.jinja_env.filters['format_json'] = format_json
 
 def process_exif_data(file_path):
     try:
