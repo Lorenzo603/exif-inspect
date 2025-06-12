@@ -54,11 +54,36 @@
             border: none;
             cursor: pointer;
             display: none;
+            position: relative;
         }
 
         .copy-btn img {
             width: 10px;
             height: 10px;
+        }
+
+        .copy-btn.clicked img {
+            content: url("{{ url_for('static', filename='img/check-mark-circle-line-icon.svg') }}");
+        }
+
+        .copy-btn .tooltip {
+            visibility: hidden;
+            background-color: black;
+            color: white;
+            text-align: center;
+            border-radius: 3px;
+            padding: 5px;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            font-size: 10px;
+            z-index: 1;
+        }
+
+        .copy-btn.clicked .tooltip {
+            visibility: visible;
         }
 
         tr:hover .copy-btn {
@@ -80,18 +105,23 @@
             {% for key, value in exif_data.items() %}
             <tr>
                 <td class="key">{{ key }}</td>
-                <td class="value">{{ value }} <button class="copy-btn" onclick="copyToClipboard('{{ value }}')"><img
-                            src="{{ url_for('static', filename='img/copy-to-clipboard-icon.svg') }}" alt="Copy"></button>
-                </td>
+                <td class="value">{{ value }} <button class="copy-btn"
+                        onclick="copyToClipboard(this, '{{ value }}')"><img
+                            src="{{ url_for('static', filename='img/copy-to-clipboard-icon.svg') }}" alt="Copy">
+                    <span class="tooltip">Copied!</span>
+                </button></td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
     <script>
-        function copyToClipboard(text) {
+        function copyToClipboard(button, text) {
             navigator.clipboard.writeText(text).then(() => {
-                alert('Copied to clipboard!');
+                button.classList.add('clicked');
+                setTimeout(() => {
+                    button.classList.remove('clicked');
+                }, 2000);
             }).catch(err => {
                 console.error('Failed to copy: ', err);
             });
