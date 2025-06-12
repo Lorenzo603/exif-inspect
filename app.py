@@ -4,6 +4,8 @@ import json
 import os
 import tempfile
 import platform
+import re
+
 
 app = Flask(__name__)
 
@@ -30,7 +32,7 @@ def format_json(content):
         json_data = json.loads(content)
         pretty_json = json.dumps(json_data, indent=4)
         # Add basic syntax highlighting
-        pretty_html = pretty_json.replace(':', '<span style="color: #f92672;">:</span>')
+        pretty_html = re.sub(r'"(.*?)":', r'<span style="color: #f92672;">"\1":</span>', pretty_json)
         pretty_html = pretty_html.replace('{', '<span style="color: #66d9ef;">{</span>')
         pretty_html = pretty_html.replace('}', '<span style="color: #66d9ef;">}</span>')
         pretty_html = pretty_html.replace('[', '<span style="color: #a6e22e;">[</span>')
