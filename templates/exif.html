@@ -15,7 +15,7 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1000px;
             min-width: 400px;
             margin: 40px auto;
             padding: 20px;
@@ -50,11 +50,27 @@
         }
 
         td.key {
+            min-width: 300px;
             color: #66d9ef;
+        }
+
+        td.key-json {
+            min-width: 300px;
+            color: #66d9ef;
+            vertical-align: top;
         }
 
         td.value {
             position: relative;
+        }
+
+        pre {
+            padding: 10px;
+            white-space: pre-wrap;       /* Since CSS 2.1 */
+            white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
         }
 
         .copy-btn {
@@ -116,15 +132,25 @@
             <tbody>
                 {% for key, value in exif_data.items() %}
                 <tr>
+                    {% if value | is_json %}
+                    <td class="key-json">{{ key }}</td>
+                    {% else %}
                     <td class="key">{{ key }}</td>
+                    {% endif %}
+                    
                     <td class="value">
-                        {{ value | format_json | safe }}
+                        {% if value | is_json %}
+                        <pre>{{ value | format_json | safe }}</pre>
+                        {% else %}
+                        {{ value }}
+                        {% endif %}
                         <button class="copy-btn"
                             onclick="copyToClipboard(this, '{{ value }}')">
                             <img src="{{ url_for('static', filename='img/copy-to-clipboard-icon.svg') }}" alt="Copy">
                             <span class="tooltip">Copied!</span>
                         </button>
                     </td>
+
                 </tr>
                 {% endfor %}
             </tbody>

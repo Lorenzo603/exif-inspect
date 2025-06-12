@@ -19,12 +19,12 @@ else:
 def is_json(content):
     if not content:
         return False
-    if not content.startswith('{'):
-        return False
     try:
-        json.loads(content)
-        return True
-    except ValueError:
+        parsed = json.loads(content)
+        print(f"Parsed content: {parsed}, {isinstance(parsed, (dict, list))}")  # Debugging line to see parsed content
+        # Check if the parsed content is a dictionary or list
+        return isinstance(parsed, (dict, list))
+    except Exception:
         return False
 
 def format_json(content):
@@ -38,7 +38,7 @@ def format_json(content):
         pretty_html = pretty_html.replace('[', '<span style="color: #a6e22e;">[</span>')
         pretty_html = pretty_html.replace(']', '<span style="color: #a6e22e;">]</span>')
         pretty_html = pretty_html.replace(',', '<span style="color: #bbbbbb;">,</span>')
-        return '<pre>' + pretty_html + '</pre>'
+        return pretty_html
     except ValueError:
         return content
     
@@ -55,8 +55,6 @@ def process_exif_data(file_path):
                 key, value = line.split(':', 1)
                 key = key.strip()
                 value = value.strip()
-                if is_json(value):
-                    value = format_json(value)
                 exif_data[key] = value
         return render_template('exif.html', exif_data=exif_data)
     except Exception as e:
