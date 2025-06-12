@@ -103,8 +103,9 @@
 </head>
 
 <body>
-    <h1>Exif Metadata</h1>
+
     <div class="container">
+        <h1>Exif Metadata</h1>
         <table>
             <thead>
                 <tr>
@@ -119,8 +120,8 @@
                     <td class="value">{{ value }} <button class="copy-btn"
                             onclick="copyToClipboard(this, '{{ value }}')"><img
                                 src="{{ url_for('static', filename='img/copy-to-clipboard-icon.svg') }}" alt="Copy">
-                        <span class="tooltip">Copied!</span>
-                    </button></td>
+                            <span class="tooltip">Copied!</span>
+                        </button></td>
                 </tr>
                 {% endfor %}
             </tbody>
