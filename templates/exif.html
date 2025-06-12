@@ -14,22 +14,89 @@
             color: #66d9ef;
         }
 
-        pre {
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th,
+        td {
+            padding: 5px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #66d9ef;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
             background-color: #444;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        tr:nth-child(odd) {
+            background-color: #555;
+        }
+
+        td.key {
+            color: #66d9ef;
+        }
+
+        td.value {
+            position: relative;
+        }
+
+        .copy-btn {
+            margin-left: 10px;
+            padding: 0px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: none;
+        }
+
+        .copy-btn img {
+            width: 10px;
+            height: 10px;
+        }
+
+        tr:hover .copy-btn {
+            display: inline;
         }
     </style>
 </head>
 
 <body>
     <h1>Exif Metadata</h1>
-    <pre>
-      {% for key, value in exif_data.items() %}
-        {{ key }}: {{ value }}
-      {% endfor %}
-    </pre>
+    <table>
+        <thead>
+            <tr>
+                <th>Tag Name</th>
+                <th>Tag Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, value in exif_data.items() %}
+            <tr>
+                <td class="key">{{ key }}</td>
+                <td class="value">{{ value }} <button class="copy-btn" onclick="copyToClipboard('{{ value }}')"><img
+                            src="{{ url_for('static', filename='img/copy-to-clipboard-icon.svg') }}" alt="Copy"></button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+    </script>
 </body>
 
 </html>
