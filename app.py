@@ -30,7 +30,7 @@ def is_json(content):
 def format_json(content):
     try:
         json_data = json.loads(content)
-        pretty_json = json.dumps(json_data, indent=4)
+        pretty_json = json.dumps(json_data, indent=2)
         # Add basic syntax highlighting
         pretty_html = re.sub(r'"(.*?)":', r'<span style="color: #69ff70;">"\1":</span>', pretty_json)
         pretty_html = pretty_html.replace('{', '<span style="color: #66d9ef;">{</span>')
