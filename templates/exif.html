@@ -14,6 +14,16 @@
             color: #66d9ef;
         }
 
+        .container {
+            max-width: 800px;
+            min-width: 400px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #444;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -58,8 +68,8 @@
         }
 
         .copy-btn img {
-            width: 10px;
-            height: 10px;
+            width: 13px;
+            height: 13px;
         }
 
         .copy-btn.clicked img {
@@ -94,26 +104,28 @@
 
 <body>
     <h1>Exif Metadata</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Tag Name</th>
-                <th>Tag Value</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for key, value in exif_data.items() %}
-            <tr>
-                <td class="key">{{ key }}</td>
-                <td class="value">{{ value }} <button class="copy-btn"
-                        onclick="copyToClipboard(this, '{{ value }}')"><img
-                            src="{{ url_for('static', filename='img/copy-to-clipboard-icon.svg') }}" alt="Copy">
-                    <span class="tooltip">Copied!</span>
-                </button></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Tag Name</th>
+                    <th>Tag Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, value in exif_data.items() %}
+                <tr>
+                    <td class="key">{{ key }}</td>
+                    <td class="value">{{ value }} <button class="copy-btn"
+                            onclick="copyToClipboard(this, '{{ value }}')"><img
+                                src="{{ url_for('static', filename='img/copy-to-clipboard-icon.svg') }}" alt="Copy">
+                        <span class="tooltip">Copied!</span>
+                    </button></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
     <script>
         function copyToClipboard(button, text) {
