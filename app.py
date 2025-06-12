@@ -21,7 +21,6 @@ def is_json(content):
         return False
     try:
         parsed = json.loads(content)
-        print(f"Parsed content: {parsed}, {isinstance(parsed, (dict, list))}")  # Debugging line to see parsed content
         # Check if the parsed content is a dictionary or list
         return isinstance(parsed, (dict, list))
     except Exception:
