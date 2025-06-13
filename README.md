@@ -9,6 +9,8 @@ python app.py
 
 ## Docker deployment
 
+Unpack the ExifTool .tar in the /bin folder.
+
 On Macos, make sure Colima is started
 
 ```bash

@@ -13,7 +13,7 @@ if platform.system() == 'Windows':
     EXIF_TOOLS_PATH = 'C:\\Tools\\ExifViewers\\exiftool-13.30_64\\exiftool.exe'
     USE_TEMPFILE = False
 else:
-    EXIF_TOOLS_PATH = 'exiftool'
+    EXIF_TOOLS_PATH = 'bin/exiftool'
     USE_TEMPFILE = True
 
 def is_json(content):
